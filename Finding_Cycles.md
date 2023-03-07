@@ -84,26 +84,42 @@ $2^{i} 2^{j} 2^{k} = \frac{3 * a + s}{a} \frac{3 * \frac{3 * a + s}{2^i} + s}{\f
 
 Solving for $a$
 
-$a = s * \frac{3^2 + 3 * 2^i + 2^j}{2^{i+j+k} - 3^3}$
+$a = s * \frac{3^2 + 3 * 2^i + 2^{i+j}j}{2^{i+j+k} - 3^3}$
 
 (Quickly testing this out for $3 * n + 5$, we get $a=19, a=49, a=31, a=37, a=23, a=29$, which is correct. 
 
 Generalizing to a n-cycle:
 
-$a = s * \frac{3^{n-1} + 3^{n-2} * 2^i + 3^{n-3} * 2^j ... + 3^{0} * 2^y}{2^{i+j .. + y + z} - 3^n}$ where $i + j + ... y + z = floor(log2(3^m))+1$ when $n >> s$.
+$a = s * \frac{3^{n-1} + 3^{n-2} * 2^i + 3^{n-3} * 2^{i+j} ... + 3^{0} * 2^{i + j + ... + y}{2^{i+j .. + y + z} - 3^n}$ where $i + j + ... y + z = floor(log2(3^m))+1$ when $n >> s$.
+
+TODO: Python script with examples
 
 # The $3 * n + 1$ case
 
 For $3 * n + 1$, the expression is simplified a bit because $s=1$. Rearranging a bit... 
 
-${2^{i+j .. + y + z} - 3^n} = \frac{3^{n-1}}{a} + \frac{3^{n-2} * 2^i}{a} + \frac{3^{n-3} * 2^j}{a} ... + \frac{3^{0} * 2^y}{a}$
+${2^{i+j .. + y + z} - 3^n} = \frac{3^{n-1}}{a} + \frac{3^{n-2} * 2^i}{a} + \frac{3^{n-3} * 2^{i+j}}{a} ... + \frac{3^{0} * 2^{i + j + ... y}}{a}$
 
-Left side of the equation is a whole number, so the right hand terms sum to a whole number. Such an $a$ can not be an odd integer however -- except for the trivial cycle $a=1$. Such an $a$ would need to either be evenly divisible by every term, which is not possible because powers of 3 and 2 are coprime. And if there is a remainder of the quotients, these remainders cannot add up to a whole number because they are either a remainder of a power of 3 or a power of 2. 
+## Observations
 
-TODO: One of the valid values for i,j,k, etc is i=1, j=1, k=1, then the power of 2 not present in the numerator is some larger number. This means the numerator's powers of 2 are all just 2, which allows the numerator to be simplified dramatically and easily proves the above, however it only proves it for i=1,j=1 etc and I am not 100% able to prove that if one cycle exists it exists for all partitions
+Notice that in the numerator, $i, j, k$ are present but the final power of 2 ($z$) is not in the numerator, just the denominator. A perfectly valid cycle would be $i=1, j=1, k=1$ etc and then $z$ is some large number. For this particular cycle, we can rewrite the above formula as
 
-TODO: Add Python code to print the cycles for a given rule and given length
+${2^{i+j .. + y + z} - 3^n} = \frac{3^{n-1} + 3^{n-2} * 2 + 3^{n-3} * 2^2 ... + 3^{0} * 2^{n-1}}{a}= \frac{\product{a}{b}}{a} $
 
+## Back to the general case
 
+${2^{i+j .. + y + z} - 3^n} = \frac{3^{n-1}}{a} + \frac{3^{n-2} * 2^i}{a} + \frac{3^{n-3} * 2^{i+j}}{a} ... + \frac{3^{0} * 2^{i+j+y}}{a}$
 
+Left side of the equation is a whole number, so the right hand terms sum to a whole number. 
 
+Note that each term in the RHS is a fraction, where the numerator is of the form $3^n * 2^m$. $a=1$ gives the trivial cycle so another cycle must be larger than $a=1$.
+
+Since the left hand side is a whole number, so is the right hand side. To make that happen, $a$ needs to either:
+
+1: Evenly divide all the terms so each term is a whole number
+
+2: Divide some or all of the numbers evenly, and for the terms that are not divided evenly, their remainders must sum to a whole number. 
+
+(1) is impossible because $a$ would need to evenly divide both a power of 3 and a power of 2.
+
+(2) $a$ will never divide $2^{i+j+..+y}$ evenly because that would imply $a$ is even. So, there will always be a remainder, of the form $\frac{r}{2^{i+j+...y}}$. At least one of the other terms must also have a remainder in order to offset this remainder to sum to a whole number. Summing these other remainders to a single fraction, we will have $\frac{R}{3^j * 2^k}$. $R$ is even. $r$ is odd.  These two irreducible fractions cannot be added to make a whole number because $r$ and $R$ are not both even or both odd. 
