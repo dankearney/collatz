@@ -122,4 +122,4 @@ Since the left hand side is a whole number, so is the right hand side. To make t
 
 (1) is impossible because $a$ would need to evenly divide both a power of 3 and a power of 2.
 
-(2) $a$ will never divide $2^{i+j+..+y}$ evenly because that would imply $a$ is even. So, there will always be a remainder, of the form $\frac{r}{2^{i+j+...y}}$. At least one of the other terms must also have a remainder in order to offset this remainder to sum to a whole number. Summing these other remainders to a single fraction, we will have $\frac{R}{3^j * 2^k}$. $R$ is even. $r$ is odd.  These two irreducible fractions cannot be added to make a whole number because $r$ and $R$ are not both even or both odd. 
+(2) $a$ will never divide $2^{i+j+..+y}$ evenly because that would imply $a$ is even. So, there will always be a remainder, of the form $\frac{r}{2^{i+j+...y}}$. At least one of the other terms must also have a remainder in order to offset this remainder to sum to a whole number. Summing these other remainders to a single fraction, we will have $\frac{R}{3^n * 2^m}$.  TODO finish up proof 
