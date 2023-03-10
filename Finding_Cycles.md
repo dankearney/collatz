@@ -4,9 +4,9 @@ For long-ish cycles (with $n >> s$, where $n$ is the number of odd numbers in th
 
 $a = s * \frac{m^{n-1} + 2^i * m^{n-2} + 2^{i+j} * m^{n-3} + ... 2^{i + j + .. y}}{2^{i + j .. y + z} - m^{n}}$
 
-Where $a$ is one of the odd numbers, $n$ is the number of odd numbers in the cycle, and $i, j, ... y, z$ are powers of 2 such that $i+j+..+y+z = floor(log_2(m^n))+1$ and $i, j, .. y, z$ are positive integers. If $a$ is a positive odd number then we've found a cycle. 
+Where $a$ is one of the odd numbers, $n$ is the number of odd numbers in the cycle, and $i, j, ... y, z$ are positive integers such that $i+j+..+y+z = floor(log_2(m^n))+1$. If $a$ is a positive odd number then we've found a cycle. 
 
-You can also find cycles using this formula. If $s = 2^{floor(log_2(m^n))+1} - m^n$ then $a$ is always a whole number. So, given any arbitrary valid $m$ and $n$, we can always find an integer $s$ to plug in that gives a cycle.
+You can also quickly find cycles using this formula. If $s = 2^{floor(log_2(m^n))+1} - m^n$ then $a$ is always a whole number. So, given any arbitrary valid $m$ and $n$, we can always find an integer $s$ to plug in that gives a cycle.
 
 Example, for the rule $3 * x + s$ and $n=5$, plugging in, we get $s=13$ and indeed, plugging in, there are cycles, such as one including $341$  or $211$. 
 
