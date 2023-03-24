@@ -1,11 +1,10 @@
 # Quick Summary
 
-As you traverse from one number (n0) to another (n1), n1 is either n0/2 or (3 n0 + 1). For a cycle to exist, the product of all of the increases must equal the decreases — you need to wind up exactly where you started.
-For example, the trivial cycle 1 => 4 => 2 => 1 has one increase of (3 + 1) = 4, and two decreases of 2, also equaling 4.
+As you traverse from one number (n0) to another (n1), n1 is either $\frac{n_0}{2}$ or $3 * n_0 + 1$. For a cycle to exist, the product of all of the increases must equal the decreases — i.e. after all the ups and downs, you need to wind up exactly where you started.
 
-For the alternative rule where odd numbers go up by 3n + 5, there are some cycles, like 19 => 62 => 31 => 98 => 49 => 152 => 76 => 38 => 19. The increases here are approximately 3.26, 3.16, and 3.10, the product of which is exactly 32, or 2^5.
+For example, for the rule where odd numbers go up by $3 * n + 5$, one cycle is 19 => 62 => 31 => 98 => 49 => 152 => 76 => 38 => 19. The increases here are approximately 3.26, 3.16, and 3.10, the product of which is exactly 32, or 2^5.
 
-As n gets larger, (3n + 1) approaches 3n. n=10,001 to 30,004 is an increase of 3.0001, for example. So as n gets larger, the product of the increases is near a power of 3, and that has to exactly equal a power of 2.
+As n gets larger, $3 * n + 1$ approaches $3n$. n=10,001 to 30,004 is an increase of 3.0001, for example. So as $n$ gets larger, the product of the increases is close to a power of 3, and that has to exactly equal a power of 2.
 
 For small cycles with just a few odd numbers, this number is quite close to a power of 3. 3.0001^4, for example, is 81.01, a tiny bit larger than 81. Clearly, we need a big cycle with a lot of odd numbers so that the little error gets magnified. However, as the power of 3 gets larger, the next nearest power of 2 remains far away, as explained here. https://mathoverflow.net/a/116960
 
@@ -41,3 +40,23 @@ Odd Rule: 1 * n + 9
 Run: 7 => 16 => 8 => 4 => 2 => 1 => 10 => 5 => 14 => 7
 Product of increases: $16/7 * 10 / 1 * 14 / 5 = 64$
 Product of decreases: $2^6 = 64$
+
+## Near-Cycles
+
+The $3 * n + 1$ rule has some near-cycles, like 59 => 178 => 89 => 268 => 134 => 67 => 202 => 101 => 304 => 152 => 76 => 38 => 19 => 58. 
+
+The increases here as we move from odd to even are 178/59=3.017, 268/89=3.011, 202/67=3.015, 304/101=3.001, and 58/19=3.053, the product of which is 251.66 -- reasonably close to the product of the decreases (256), but still off. 
+
+## The Futility of Trying to Find Cycles
+
+The Collatz conjecture is known to be true for some gigantic numbers, tested up to $2^{68}$. This means any cycle must start with a very large number, which also implies that $3 * n + 1$ is extremely close to $3 * n$.   For n=1 billion, $\frac{3 * n + 1}{n} =  3.000000001$. 
+
+Let's suggest that some non-trivially-large number is the lowest (odd) number in a cycle. 
+
+If the cycle has $d$ odd numbers, then the lower limit of the product of the increases is $3 + x^d$, where $x$ is the excess over 3.0. $x < 1$ and approaches 0.  
+
+Since a power of 3 is always odd, it will never equal a power of 2. Therefore, $3 + x^d >= 3^d + 1$ in order for $3 + x^d$ to possibly equal a power of 2.
+
+For $n=$ 1 billion, $x = .00000001$. The smallest value of $d$ that satisfies the above is 18, so the cycle must have at least 18 odd numbers in it. $3^18 = 387420489$, but the nearest power of 2 above that is $2^29 = 536870912$, which is 149450423 larger than the power of 3. We are so, hopelessly far away from a power of 2 with $d=18$. No worries, we can just try a much larger cycle to get our error to increase such that we get closer! How about $d = 100$? No dice. The next power of 2 above $3^{100}$ is $2^{159}$, which is 215373297933440128065381286592520237125858749487 above $3^100$ -- preposterously out of reach. As the cycles get longer, the nearest power of 2 actually trends further away. Why? https://mathoverflow.net/a/116960 explains this nicely -- powers of 2 and 3 cannot be close to one another as powers get larger. We need a power of 2 to be close to a power of 3, but that is not possible.
+
+What does this mean? Cycles must be relatively short, and start with relatively low numbers, otherwise the product of the increases can not equal a power of 2, regardless of the rule.
