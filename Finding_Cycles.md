@@ -1,16 +1,18 @@
 # Quick Summary
 
+The Collatz Conjecture is simple on the surface. Given any number, $n_0$, if it's even, divide it by 2, if it's odd, increase it by $3 * n_0 + 1$. The conjecture states that all starting numbers wind up back at 1. This post explains why there are no cycles besides the trivial 1 => 4 => 2 => 1. 
+
 For a cycle to exist as you move from one number to another to another, the product of all of the increases must equal the decreases — i.e. after all the ups and downs, you need to wind up exactly where you started.
 
 For example, for the rule where odd numbers go up by $3 * n + 5$, one cycle is 19 => 62 => 31 => 98 => 49 => 152 => 76 => 38 => 19. The increases here are approximately 3.26, 3.16, and 3.10, the product of which is exactly 32, or $2^5$, which is also the product of the decreases!
 
-As n gets larger, $3 * n + 1$ approaches $3n$. n=10,001 to 30,004 is an increase of 3.0001, for example. So as $n$ gets larger, the product of the increases is close to a power of 3, and that has to exactly equal a power of 2.
+As n gets larger, $\frac{3 * n + 1}{3n}$ approaches $3$. n=10,001 to 30,004 is an increase of 3.0001, for example. So as $n$ gets larger, the product of the increases is close to a power of 3, and that has to exactly equal a power of 2. 
 
-As you try ever larger values of n, you need ever larger cycle lengths to get the increases to produce a power of 2, but that power of 2 remains far away, which necessitates longer cycles, which pushes the power of 2 even farther away. This is why all the cycles you can find for various rules tend to be of smaller $n$ and shorter cycle length.
+As you try ever larger values of n, you need ever larger cycle lengths to get the increases to compound such that you move away from a power of 3 and towards a power of 2. However, as $n$ grows, you need longer cycles, which pushes the power of 2 even farther away. This is why all the cycles you can find for various rules tend to be of smaller $n$ and shorter cycle length.
 
 # Background
 
-The Collatz Conjecture is simple on the surface. Given any number, $n_0$, if it's even, divide it by 2, if it's odd, increase it by $3 * n_0 + 1$. The conjecture states that all starting numbers wind up back at 1. This is interesting for two reasons: first, that the traversal never winds up going up to infinity, it always goes down. That part is not super exciting, because the probabilistic explanation is that the division by 2 of even numbers is stronger than the increase of $3 * n + 1$ (and its subsequent halving, since that's always even) over the long run, so a decrease is inevitable. The more interesting problem is why there are no cycles -- that is, why you never get stuck in a loop, besides the trivial $4 => 2 => 1 => 4$. 
+The Collatz conjecture is interesting for two reasons: first, that the traversal never winds up going up to infinity, it always goes down. That part is not super exciting, because the probabilistic explanation is that the division by 2 of even numbers is stronger than the increase of $3 * n + 1$ (and its subsequent halving, since that's always even) over the long run, so a decrease is inevitable. The more interesting problem is why there are no cycles -- that is, why you never get stuck in a loop, besides the trivial $4 => 2 => 1 => 4$. 
 
 My approach focuses on an explanation for the lack of cycles. 
 
@@ -45,16 +47,16 @@ Product of decreases: $2^6 = 64$
 
 The $3 * n + 1$ rule has some near-cycles, like 59 => 178 => 89 => 268 => 134 => 67 => 202 => 101 => 304 => 152 => 76 => 38 => 19 => 58. 
 
-The increases here as we move from odd to even are 178/59=3.017, 268/89=3.011, 202/67=3.015, 304/101=3.001, and 58/19=3.053, the product of which is 251.66 -- reasonably close to the product of the decreases (256), but not exactly equal, hence the lack of cycles. 
+The increases here as we move from odd to even are 178/59=3.017, 268/89=3.011, 202/67=3.015, 304/101=3.001, and 58/19=3.053, the product of which is 251.66 -- reasonably close to the product of the decreases (256), but not exactly equal, hence that this is not a cycle. 
 
 ## The Futility of Trying to Find Cycles
 
-The Collatz conjecture is known to be true for some gigantic numbers, tested up to $2^{68}$. This means any cycle must start with a very large number, which also implies that $\frac{3 * n + 1}{n}$ is extremely close to $3$.   For n=1 billion, $\frac{3 * n + 1}{n} =  3.000000001$. 
+The Collatz conjecture is known to be true for some gigantic numbers. This means any cycle must start with a very large number, which also implies that $\frac{3 * n + 1}{n}$ is extremely close to $3$.   For n=1 billion, $\frac{3 * n + 1}{n} =  3.000000001$, for example.
 
-If the cycle has $d$ odd numbers, then the lower limit of the product of the increases is $3 + x^d$, where $x$ is the excess over 3.0. $x < 1$ and approaches 0.  
+If the cycle has $d$ odd numbers, then the upper limit of the product of the increases is $3 + x^d$, where $x$ is the largest excess over 3.0. $x < 1$ and approaches 0.  
 
-Since a power of 3 is always odd, it will never equal a power of 2. Therefore, $3 + x^d >= 3^d + 1$ in order for $3 + x^d$ to possibly equal a power of 2.
+Best case scenario, there is a power of 2 that is exactly 1 larger than $3^d$ and we just need $3 + x^d = 3^d + 1$.
 
-For $n=$ 1 billion, $x = .00000001$. The smallest value of $d$ that satisfies the above is 18, so the cycle must have at least 18 odd numbers in it. $3^18 = 387420489$, but the nearest power of 2 above that is $2^29 = 536870912$, which is 149450423 larger than the power of 3. We are so, hopelessly far away from a power of 2 with $d=18$. No worries, we can just try a much larger cycle to get our error to increase such that we get closer! How about $d = 100$? No dice. The next power of 2 above $3^{100}$ is $2^{159}$, which is 215373297933440128065381286592520237125858749487 above $3^100$ -- preposterously out of reach. As the cycles get longer, the nearest power of 2 actually trends further away. Why? https://mathoverflow.net/a/116960 explains this nicely -- powers of 2 and 3 cannot be close to one another as powers get larger. We need a power of 2 to be close to a power of 3, but that is not possible. And, as we try larger starting numbers, $\frac{3 * n +1}{n}$ gets even closer to 0, necessitating even larger cycle lengths, making the problem worse!
+For $n=$ 1 billion, $x = .00000001$. The smallest value of $d$ that satisfies the above is 18, so the cycle must have at least 18 odd numbers in it. $3^18 = 387420489$, but the nearest power of 2 above that is $2^29 = 536870912$, which is 149450423 larger than the power of 3. Bad luck -- the power of 2 is nowhere nearby. But no worries, we can just try a much larger cycle to get our error to increase such that we get closer! How about $d = 100$? No dice. The next power of 2 above $3^{100}$ is $2^{159}$, which is 215373297933440128065381286592520237125858749487 above $3^100$ -- preposterously out of reach of even our compounding error. As the cycles get longer, the nearest power of 2 actually trends further away. Why? https://mathoverflow.net/a/116960 explains this nicely -- powers of 2 and 3 cannot be close to one another as powers get larger. We need a power of 2 to be close to a power of 3, but that is not possible. And, as we try larger starting numbers, $\frac{3 * n +1}{n}$ gets even closer to 0, necessitating even larger cycle lengths, making the problem worse!
 
 What does this mean? Cycles must be relatively short, and start with relatively low numbers, otherwise the product of the increases can not equal a power of 2, regardless of the odd rule. 
