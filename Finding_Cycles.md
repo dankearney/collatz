@@ -6,7 +6,7 @@ For a cycle to exist as you move from one number to another to another, the prod
 
 For example, for the rule where odd numbers go up by $3 * n + 5$, one cycle is 19 => 62 => 31 => 98 => 49 => 152 => 76 => 38 => 19. The increases here are approximately 3.26, 3.16, and 3.10, the product of which is exactly 32, or $2^5$, which is also the product of the decreases!
 
-As n gets larger, $\frac{3 * n + 1}{3n}$ approaches $3$. n=10,001 to 30,004 is an increase of 3.0001, for example. So as $n$ gets larger, the product of the increases is close to a power of 3, and that has to exactly equal a power of 2. 
+As n gets larger, $\frac{3 * n + 1}{n}$ approaches $3$. n=10,001 to 30,004 is an increase of 3.0001, for example. So as $n$ gets larger, the product of the increases is close to a power of 3, and that has to exactly equal a power of 2. 
 
 As you try ever larger values of n, you need ever larger cycle lengths to get the increases to compound such that you move away from a power of 3 and towards a power of 2. However, as $n$ grows, you need longer cycles, which pushes the power of 2 even farther away. This is why all the cycles you can find for various rules tend to be of smaller $n$ and shorter cycle length.
 
