@@ -6,7 +6,7 @@ Each number $n_i$ is either $n_{i-1} * \frac{1}{2}$ or $3 + \frac{1}{n_{i-1} * n
 
 A cycle requires each $n_i$ to be distinct odd values such that the RHS product of $o$ terms exactly equals the LHS, which is $2^e$. 
 
-Let's try to find a cycle. If $o=3$, the cycle has 3 odd numbers. Since each $3 + \frac{1}{n_1} \approx 3 $ except for trivially small $n_i$, the RHS will be somewhat larger than $3^3 = 27$. The nearest viable power of 2 is $2^5 = 32$. So, $n_{o_1}$, $n_{o_2}$, and $n_{o_3}$ must satisfy $(3 + \frac{1}{n_{o_1}})(3 + \frac{1}{n_{o_2}})(3 + \frac{1}{n_{o_3}}) = 32$. Trying $n_1 = 1, n_2=3, n_3=5$ gives 42.667, $n_1=3, n_2=5, n_3=7$ gives 33.524, and $n_1=5, n_2=7, n_3=9$ gives 31.287. Every other combination of $n_1$, $n_2$, and $n_3% will give a smaller number above 27 -- so there is no valid $n_1$, $n_2$, and $n_3$ that can give a 3-odd cycle.
+Let's try to find a cycle. If $o=3$, the cycle has 3 odd numbers. Since each $3 + \frac{1}{n_1} \approx 3 $ except for trivially small $n_i$, the RHS will be somewhat larger than $3^3 = 27$. The nearest viable power of 2 is $2^5 = 32$. So, $n_{o_1}$, $n_{o_2}$, and $n_{o_3}$ must satisfy $(3 + \frac{1}{n_{o_1}})(3 + \frac{1}{n_{o_2}})(3 + \frac{1}{n_{o_3}}) = 32$. Trying $n_1 = 1, n_2=3, n_3=5$ gives 42.667, $n_1=3, n_2=5, n_3=7$ gives 33.524, and $n_1=5, n_2=7, n_3=9$ gives 31.287. Every other combination of $n_1$, $n_2$, and $n_3% will give a smaller number above 27 -- so there is no valid $n_1$, $n_2$, and $n_3$ that can give a 3-odd cycle. 
 
 Extending this out to arbitrary lengths.
 
