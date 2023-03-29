@@ -2,7 +2,7 @@
 
 Suppose there is a cycle of numbers $n_1$, $n_2$, $n_m$ of length $m$, where $n_m = n_1$. Define $n_1$ as the smallest odd number in the cycle.
 
-Each number $n_i$ is either $n_{i-1} * \frac{1}{2}$ or $3 + \frac{1}{n_{i-1} * n{i-1}. If there are $e$ even numbers and $o$ odd numbers in the cycle, then, the increases of $3 + \frac{1}{n_i}$ for each odd number must have the same product as the decreases of halving. Substiting that in, $\frac{1}{2}^{e} = (3 + \frac{1}{n_{o_{1}}}) (3 + \frac{1}{n_{o_2}}) ... (3 + \frac{1}{n_{o_{max}}})$.
+Each number $n_i$ is either $n_{i-1} * \frac{1}{2}$ or $3 + \frac{1}{n_{i-1}} * n{i-1}$. If there are $e$ even numbers and $o$ odd numbers in the cycle, then, the increases of $3 + \frac{1}{n_i}$ for each odd number must have the same product as the decreases of halving. Substiting that in, $\frac{1}{2}^{e} = (3 + \frac{1}{n_{o_{1}}}) (3 + \frac{1}{n_{o_2}}) ... (3 + \frac{1}{n_{o_{max}}})$.
 
 A cycle requires each $n_i$ to be distinct odd values such that the RHS product of $o$ terms exactly equals the LHS, which is $2^e$. 
 
