@@ -1,3 +1,16 @@
+# Quick proof
+
+Suppose there is a cycle of numbers $n_1$, $n_2$, $n_m$ of length $m$, where $n_m = n_1$. Define $n_1$ as the smallest odd number in the cycle.
+
+Each number $n_i$ is either $n_{i-1} * \frac{1}{2}$ or $3 + \frac{1}{n_{i-1} * n{i-1}. If there are $e$ even numbers and $o$ odd numbers in the cycle, then, the increases of $3 + \frac{1}{n_i}$ for each odd number must have the same product as the decreases of halving. Substiting that in, $\frac{1}{2}^{e} = (3 + \frac{1}{n_{o_{1}}}) (3 + \frac{1}{n_{o_2}}) ... (3 + \frac{1}{n_{o_{max}}})$.
+
+A cycle requires each $n_i$ to be distinct odd values such that the RHS product of $o$ terms exactly equals the LHS, which is $2^e$. 
+
+Let's try to find a cycle. If $o=3$, the cycle has 3 odd numbers. Since each $3 + \frac{1}{n_1} \approx 3 $ except for trivially small $n_i$, the RHS will be somewhat larger than $3^3 = 27$. The nearest viable power of 2 is $2^5 = 32$. So, $n_{o_1}$, $n_{o_2}$, and $n_{o_3}$ must satisfy $(3 + \frac{1}{n_{o_1}})(3 + \frac{1}{n_{o_2}})(3 + \frac{1}{n_{o_3}}) = 32$. Trying $n_1 = 1, n_2=3, n_3=5$ gives 42.667, $n_1=3, n_2=5, n_3=7$ gives 33.524, and $n_1=5, n_2=7, n_3=9$ gives 31.287. Every other combination of $n_1$, $n_2$, and $n_3% will give a smaller number above 27 -- so there is no valid $n_1$, $n_2$, and $n_3$ that can give a 3-odd cycle.
+
+Extending this out to arbitrary lengths.
+
+
 # Quick Summary
 
 The Collatz Conjecture is simple on the surface. Given any number, $n_0$, if it's even, divide it by 2, if it's odd, increase it by $3 * n_0 + 1$. The conjecture states that all starting numbers wind up back at 1. This post explains why there are no cycles besides the trivial 1 => 4 => 2 => 1. 
@@ -8,7 +21,7 @@ For example, for the rule where odd numbers go up by $3 * n + 5$, one cycle is 1
 
 As n gets larger, $\frac{3 * n + 1}{n}$ approaches $3$. n=10,001 to 30,004 is an increase of 3.0001, for example. So as $n$ gets larger, the product of the increases is close to a power of 3, and that has to exactly equal a power of 2. 
 
-As you try ever larger values of n, you need ever larger cycle lengths to get the increases to compound such that you move away from a power of 3 and towards a power of 2. However, as $n$ grows, you need longer cycles, which pushes the power of 2 even farther away. This is why all the cycles you can find for various rules tend to be of smaller $n$ and shorter cycle length.
+As you try ever larger values of n, you need ever larger cycle lengths to get the increases to compound such that you move away from a power of 3 and towards a power of 2. This is why all the cycles you can find for various rules tend to be of smaller $n$ and shorter cycle length -- otherwise you'll need to find a starting number such that you have a preposterously long cycle.
 
 # Background
 
@@ -59,4 +72,4 @@ Best case scenario, there is a power of 2 that is exactly 1 larger than $3^d$ an
 
 For $n=$ 1 billion, $x = .00000001$. The smallest value of $d$ that satisfies the above is 18, so the cycle must have at least 18 odd numbers in it. $3^18 = 387420489$, but the nearest power of 2 above that is $2^29 = 536870912$, which is 149450423 larger than the power of 3. Bad luck -- the power of 2 is nowhere nearby. But no worries, we can just try a much larger cycle to get our error to increase such that we get closer! How about $d = 100$? No dice. The next power of 2 above $3^{100}$ is $2^{159}$, which is 215373297933440128065381286592520237125858749487 above $3^{100}$ -- preposterously out of reach of even our compounding error. As the cycles get longer, the nearest power of 2 actually trends further away. Why? https://mathoverflow.net/a/116960 explains this nicely -- powers of 2 and 3 cannot be close to one another as powers get larger. We need a power of 2 to be close to a power of 3, but that is not possible. And, as we try larger starting numbers, $\frac{3 * n +1}{n}$ gets even closer to 3.0, necessitating even larger cycle lengths, making the problem worse!
 
-What does this mean? Cycles must be relatively short, and start with relatively low numbers, otherwise the product of the increases can not equal a power of 2, regardless of the odd rule. 
+What does this mean? Cycles must be relatively short, and start with relatively low numbers, otherwise the product of the increases must be 
