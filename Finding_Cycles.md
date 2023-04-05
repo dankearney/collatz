@@ -2,14 +2,9 @@
 
 Suppose there is a cycle of numbers $n_1$, $n_2$, $n_m$ of length $m$, where $n_m = n_1$. Define $n_1$ as the smallest odd number in the cycle.
 
-Each number $n_i$ is either $n_{i-1} * \frac{1}{2}$ or $3 + \frac{1}{n_{i-1}} * n{i-1}$. If there are $e$ even numbers and $o$ odd numbers in the cycle, then, the increases of $3 + \frac{1}{n_i}$ for each odd number must have the same product as the decreases of halving. Substiting that in, $\frac{1}{2}^{e} = (3 + \frac{1}{n_{o_{1}}}) (3 + \frac{1}{n_{o_2}}) ... (3 + \frac{1}{n_{o_{max}}})$.
+Each number $n_i$ is either $n_{i-1} * \frac{1}{2}$ or $3 + \frac{1}{n_{i-1}} * n{i-1}$. If there are $e$ even numbers and $o$ odd numbers in the cycle, then, the increases of $3 + \frac{1}{n_i}$ for each odd number must have the same product as the decreases of halving. Substituting that in, $\frac{1}{2}^{e} = (3 + \frac{1}{n_{o_{1}}}) (3 + \frac{1}{n_{o_2}}) ... (3 + \frac{1}{n_{o_{max}}})$.
 
-A cycle requires each $n_i$ to be distinct odd values such that the RHS product of $o$ terms exactly equals the LHS, which is $2^e$. 
-
-Let's try to find a cycle. If $o=3$, the cycle has 3 odd numbers. Since each $3 + \frac{1}{n_1} \approx 3 $ except for trivially small $n_i$, the RHS will be somewhat larger than $3^3 = 27$. The nearest viable power of 2 is $2^5 = 32$. So, $n_{o_1}$, $n_{o_2}$, and $n_{o_3}$ must satisfy $(3 + \frac{1}{n_{o_1}})(3 + \frac{1}{n_{o_2}})(3 + \frac{1}{n_{o_3}}) = 32$. Trying $n_1 = 1, n_2=3, n_3=5$ gives 42.667, $n_1=3, n_2=5, n_3=7$ gives 33.524, and $n_1=5, n_2=7, n_3=9$ gives 31.287. Every other combination of $n_1$, $n_2$, and $n_3% will give a smaller number above 27 -- so there is no valid $n_1$, $n_2$, and $n_3$ that can give a 3-odd cycle. 
-
-Extending this out to arbitrary lengths.
-
+A cycle requires each $n_i$ to be distinct odd values such that the RHS product of $o$ terms exactly equals the LHS, which is $2^e$. Since the odd numbers in a cycle are constrained, we can find an upper limit for at least one value in the cycle of any length. Interestingly this limit does not grow with longer cycle lengths. 
 
 # Quick Summary
 
@@ -27,7 +22,7 @@ As you try ever larger values of n, you need ever larger cycle lengths to get th
 
 The Collatz conjecture is interesting for two reasons: first, that the traversal never winds up going up to infinity, it always goes down. That part is not super exciting, because the probabilistic explanation is that the division by 2 of even numbers is stronger than the increase of $3 * n + 1$ (and its subsequent halving, since that's always even) over the long run, so a decrease is inevitable. The more interesting problem is why there are no cycles -- that is, why you never get stuck in a loop, besides the trivial $4 => 2 => 1 => 4$. 
 
-My approach focuses on an explanation for the lack of cycles. 
+This approach focuses on an explanation for the lack of cycles. 
 
 Given any $n_0$, we can write $n_1$ as $n_1 = \alpha_0 * n_0$, where $\alpha_0$ either equals $\frac{1}{2}$ (for even numbers) or $\frac{3 * n_0 + 1}{n_0}$ (for odd numbers). 
 
@@ -62,14 +57,10 @@ The $3 * n + 1$ rule has some near-cycles, like 59 => 178 => 89 => 268 => 134 =>
 
 The increases here as we move from odd to even are 178/59=3.017, 268/89=3.011, 202/67=3.015, 304/101=3.001, and 58/19=3.053, the product of which is 251.66 -- reasonably close to the product of the decreases (256), but not exactly equal, hence that this is not a cycle. 
 
-## The Futility of Trying to Find Cycles
+## Finding the Largest Viable Starting Point for a Cycle Length
 
-The Collatz conjecture is known to be true for some gigantic numbers. This means any cycle must start with a very large number, which also implies that $\frac{3 * n + 1}{n}$ is extremely close to $3$.   For n=1 billion, $\frac{3 * n + 1}{n} =  3.000000001$, for example.
+For a 3-odd cycle, we can set a hard upper limit on the lowest odd number in the cycle with this approach by finding the nearest power of 2 and the largest possible starting point for the optimal cycle.  
 
-If the cycle has $d$ odd numbers, then the upper limit of the product of the increases is $3 + x^d$, where $x$ is the largest excess over 3.0. $x < 1$ and approaches 0.  
+A 3-odd cycle is going to have a product of increases above 27, so the easiest power of 2 to reach is $2^5 = 32$. 
 
-Best case scenario, there is a power of 2 that is exactly 1 larger than $3^d$ and we just need $3 + x^d = 3^d + 1$.
-
-For $n=$ 1 billion, $x = .00000001$. The smallest value of $d$ that satisfies the above is 18, so the cycle must have at least 18 odd numbers in it. $3^18 = 387420489$, but the nearest power of 2 above that is $2^29 = 536870912$, which is 149450423 larger than the power of 3. Bad luck -- the power of 2 is nowhere nearby. But no worries, we can just try a much larger cycle to get our error to increase such that we get closer! How about $d = 100$? No dice. The next power of 2 above $3^{100}$ is $2^{159}$, which is 215373297933440128065381286592520237125858749487 above $3^{100}$ -- preposterously out of reach of even our compounding error. As the cycles get longer, the nearest power of 2 actually trends further away. Why? https://mathoverflow.net/a/116960 explains this nicely -- powers of 2 and 3 cannot be close to one another as powers get larger. We need a power of 2 to be close to a power of 3, but that is not possible. And, as we try larger starting numbers, $\frac{3 * n +1}{n}$ gets even closer to 3.0, necessitating even larger cycle lengths, making the problem worse!
-
-What does this mean? Cycles must be relatively short, and start with relatively low numbers, otherwise the product of the increases must be 
+$n_{o_1}$, $n_{o_2}$ and $n_{o_3}$ cannot be arbitrary numbers, they must be unique odd numbers in a valid sequence. We are looking to maximize the product of the increases, which means computing the optimal sequence of decreases of powers of 2 to maximize the product. Assuming we can find a generic solution to that problem, we can iteratively compute the lowest value in a cycle that actually makes the product >= 32. For the 3-odd cycle approach we need $o_{n_1}$ to be 3 in order for the product to be above 32; that's our hard upper limit. Never mind if 3 actually works -- we just want that upper limit for one of the values. For any cycle length, we can use this approach of alternativng between increases of 2 and decreases of 4 to find a hard upper limit for any cycle length. As it turns out, this hard upper limit does not grow over time, instead stabilizing. While this is not a proof, it is certainly interesting.
